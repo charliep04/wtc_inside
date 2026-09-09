@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Photos taken within the WTC Complex</title>
+
+<style>
+
+@font-face {
+  font-family: 'AGaramondPro';
+  src: url('fonts/AGaramondPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  background: #0c0c0c;
+  color: #ffffff;
+  font-family: 'AGaramondPro', 'Times New Roman', serif;
+  line-height: 1.45;
+}
+
+
+.page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 80px 24px;
+}
+
+
+/* Main title */
+
+.title {
+  text-align: center;
+  font-size: 20px;
+  margin: 0 0 20px 0;
+}
+
+
+/* Filter navigation */
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 0 0 38px 0;
+  font-size: 15px;
+}
+
+
+.filter-button {
+  appearance: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+  color: #888888;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+
+.filter-button:hover {
+  color: #ffffff;
+}
+
+
+.filter-button.active {
+  color: #ffffff;
+}
+
+
+/* Gallery */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+
+.photo {
+  text-align: left;
+}
+
+
+.photo.hidden {
+  display: none;
+}
+
+
+.photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.photo img:hover {
+  opacity: 0.85;
+  transform: scale(1.015);
+}
+
+
+/* Metadata hidden from gallery */
+
+.photo-info {
+  display: none;
+}
+
+
+/* ================================= */
+/* LIGHTBOX */
+/* ================================= */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+
+  background: rgba(0, 0, 0, 0.78);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  z-index: 9999;
+
+  opacity: 0;
+
+  transition: opacity 0.25s ease;
+}
+
+
+.lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+
+.lightbox-content {
+  position: relative;
+
+  width: min(900px, 100%);
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  animation: lightboxIn 0.25s ease;
+}
+
+
+@keyframes lightboxIn {
+
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+
+
+/*
+  IMPORTANT:
+
+  The lightbox image now has a fixed display area.
+  This means small thumbnail files such as
+  DSCN3626-thumb.jpg, DSCN3634-thumb.JPG, etc.
+  will scale UP just like larger source images.
+
+  object-fit: contain keeps the complete image visible
+  without cropping it.
+*/
+
+.lightbox-image {
+  display: block;
+
+  width: min(900px, 100%);
+  height: 70vh;
+
+  border: none;
+  padding: 0;
+
+  background: none;
+
+  object-fit: contain;
+}
+
+
+/* Lightbox information */
+
+.lightbox-info {
+  max-width: 750px;
+
+  margin-top: 18px;
+
+  color: #d6d6d6;
+
+  text-align: center;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+}
+
+
+.lightbox-info ul {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+.lightbox-info li {
+  margin: 2px 0;
+}
+
+
+.lightbox-info .label {
+  color: #ffffff;
+}
+
+
+/* Close button */
+
+.lightbox-close {
+  position: absolute;
+
+  top: -15px;
+  right: -15px;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+
+  background: #0c0c0c;
+
+  color: #ffffff;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 24px;
+  font-weight: 300;
+
+  line-height: 32px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  z-index: 2;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.lightbox-close:hover {
+  background: #ffffff;
+  color: #0c0c0c;
+}
+
+
+/* Footer */
+
+.footer {
+  margin-top: 45px;
+
+  font-size: 12px;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+
+/* ================================= */
+/* TABLET */
+/* ================================= */
+
+@media (max-width: 800px) {
+
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+
+  .lightbox {
+    padding: 25px;
+  }
+
+
+  .lightbox-image {
+    width: 100%;
+    height: 65vh;
+  }
+
+}
+
+
+/* ================================= */
+/* MOBILE / IPHONE */
+/* ================================= */
+
+@media (max-width: 500px) {
+
+  .page-container {
+    padding: 30px 16px 60px 16px;
+  }
+
+
+  .title {
+    margin-bottom: 18px;
+  }
+
+
+  .filters {
+    gap: 10px;
+    margin-bottom: 30px;
+    font-size: 14px;
+  }
+
+
+  /*
+    Two square thumbnails across on iPhone.
+  */
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+
+  .lightbox {
+    padding: 20px;
+  }
+
+
+  /*
+    Small images still scale up inside the
+    same lightbox display area.
+  */
+
+  .lightbox-image {
+    width: 100%;
+    height: 60vh;
+    object-fit: contain;
+  }
+
+
+  .lightbox-info {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+
+  .lightbox-close {
+    top: -12px;
+    right: -8px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+  <p class="title">
+    Photos taken within the WTC Complex on September 11, 2001
+  </p>
+
+
+  <!-- ================================= -->
+  <!-- LOCATION FILTERS -->
+  <!-- ================================= -->
+
+  <nav class="filters" aria-label="Photo locations">
+
+    <button
+      class="filter-button active"
+      data-filter="all"
+      type="button"
+    >
+      All
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="WTC 1"
+      type="button"
+    >
+      WTC 1
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="WTC 2"
+      type="button"
+    >
+      WTC 2
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="WTC 3"
+      type="button"
+    >
+      WTC 3
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="WTC 5"
+      type="button"
+    >
+      WTC 5
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="Plaza"
+      type="button"
+    >
+      Plaza
+    </button>
+
+
+    <button
+      class="filter-button"
+      data-filter="Concourse"
+      type="button"
+    >
+      Concourse
+    </button>
+
+  </nav>
+
+
+  <!-- ================================= -->
+  <!-- GALLERY -->
+  <!-- ================================= -->
+
+  <div class="gallery">
+
+
+    <!-- ================================= -->
+    <!-- WTC 1 -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-011_5498306435_z.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="55th floor"
+        data-time="Approx. 8:25 a.m."
+        data-photographer="Shannon Loy"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-012_5498306459_z.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="55th floor"
+        data-time="Approx. 8:25 a.m."
+        data-photographer="Shannon Loy"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-013_5498306489_z.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="55th floor"
+        data-time="Approx. 8:25 a.m."
+        data-photographer="Shannon Loy"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-014_5498902094_z.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="55th floor"
+        data-time="Approx. 8:25 a.m."
+        data-photographer="Shannon Loy"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="hanley.png"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="106th floor"
+        data-time="Before 8:46 a.m."
+        data-photographer="Unknown"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="gbv.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="74th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Edward Kotski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-View_Out_Window_WTC_pic2.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="74th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Edward Kotski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-View_Out_Window_WTC.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="74th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Edward Kotski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="9-11-2001_WTC_Out_Window.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="74th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Edward Kotski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="World_Trade_Center_Smokey_Hallway.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="74th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Edward Kotski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="PT.2009.2072.1_0.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="48th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="George Mironis"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="mironis_2.png"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Lobby"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="George Mironis"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="unnamed (1).jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="45th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Kazuhisa Honda"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="unnamed.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="45th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Kazuhisa Honda"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="View from the 45th Floor of the North Tower on 911.png"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="45th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Kazuhisa Honda"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="View of the WTC Plaza from inside the North Tower Lobby on 911.png"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Lobby"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Kazuhisa Honda"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3602.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3603.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3604.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3605.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3606.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3607.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3608.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3609.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3610.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3611.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3612.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3613.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3614.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3615.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3616.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3617.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3618.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3619.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3620.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3621.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3622.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3623.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3624.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3625.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3626-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3627-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3628-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3629-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3630-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3631-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="DSCN3632-thumb.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Stairway A"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="613ab5e16da09.image.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Lobby"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Unknown"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 1">
+
+      <img
+        src="fdny-ffs-personal-photos-taken-w.jpg"
+        alt="WTC 1"
+        data-building="WTC 1"
+        data-location="Lobby"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Bertram Springstead"
+      >
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- WTC 2 -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="PT.2008.4904.1_Photo_take_0.jpg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="35th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="David Bobbitt"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="lzVFA44_d.jpg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="48th–54th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Scott Rubenstein"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="qH0VbHX_d.jpg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="48th–54th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Scott Rubenstein"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="scott_1.png"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="48th–54th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Scott Rubenstein"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="scott_2.png"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="48th–54th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Scott Rubenstein"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="scott_3.png"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="48th–54th floor"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Scott Rubenstein"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="ms85-ph0662_m_ms_mwdtvlobbytvmonitorson911_2001.jpg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="44th floor sky lobby"
+        data-time="8:56 a.m."
+        data-photographer="Eileen Hillock"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="TYuamUn.jpeg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="44th floor sky lobby"
+        data-time="8:56 a.m."
+        data-photographer="Eileen Hillock"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="eileen_hillock_photo_3.png"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Lobby"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Eileen Hillock"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="wtc-39.jpg"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Stairway"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Steve Silva"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="wtc-40-horizontal.png"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Stairway"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Steve Silva"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="Debris in courtyard on way down to mall.JPG"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Lobby"
+        data-time="9:23 a.m."
+        data-photographer="Paul Fox"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="DCP_1618.JPG"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Lobby"
+        data-time="9:23 a.m."
+        data-photographer="Paul Fox"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 2">
+
+      <img
+        src="Lobby of WTS as I exited stairwell.JPG"
+        alt="WTC 2"
+        data-building="WTC 2"
+        data-location="Lobby"
+        data-time="9:24 a.m."
+        data-photographer="Paul Fox"
+      >
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- WTC 3 -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="WTC 3">
+
+      <img
+        src="assets/DSCF0005.JPG"
+        alt="WTC 3"
+        data-building="WTC 3"
+        data-location="18th floor"
+        data-time="16:22"
+        data-photographer="Photographer Name"
+      >
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- WTC 5 -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="WTC 5">
+
+      <img
+        src="DSCN3634-thumb.JPG"
+        alt="WTC 5"
+        data-building="WTC 5"
+        data-location="Lobby"
+        data-time="September 11, 2001"
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="WTC 5">
+
+      <img
+        src="DSCN3633-thumb.JPG"
+        alt="WTC 5"
+        data-building="WTC 5"
+        data-location="Lobby"
+        data-time="September 11, 2001"
+        data-photographer="John Labriola"
+      >
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- PLAZA -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="nZBajAK.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="DLtVQXi.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="LYgMAz7.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="hG8REFu.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="q4wZ53l.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="fAHfggk.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="3mVoV6y.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="JspLPnU.png"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="Shortly after 8:46 a.m."
+        data-photographer="Joe Cullity"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="NYC-Attack12-big.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="8:55 a.m."
+        data-photographer="Maciej Swulinski"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="World_Trade_Center_14.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="requiem.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="World_Trade_Center_9-11-2001_Photo.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="World_Trade_Center_9-11-2001_Responders_2.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="World_Trade_Center_9-11-2001_Responders.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Plaza">
+
+      <img
+        src="World_Trade_Center_9-11-2001_Outdoors.jpg"
+        alt="Plaza"
+        data-building="Plaza"
+        data-location="Plaza"
+        data-time="9:59 - 10:28 a.m."
+        data-photographer="Edward Kostki"
+      >
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- CONCOURSE -->
+    <!-- ================================= -->
+
+
+    <div class="photo" data-building="Concourse">
+
+      <img
+        src="wtc_01.jpg"
+        alt="Concourse"
+        data-building="Concourse"
+        data-location="Concourse"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Co-worker of Rob Beaton"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Concourse">
+
+      <img
+        src="wtc-41.jpg"
+        alt="Concourse"
+        data-building="Concourse"
+        data-location="Concourse"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="Steve Silva"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Concourse">
+
+      <img
+        src="In underground mall on way out 25 min before fall.JPG"
+        alt="Concourse"
+        data-building="Concourse"
+        data-location="Concourse"
+        data-time="9:27 a.m."
+        data-photographer="Paul Fox"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Concourse">
+
+      <img
+        src="DCP_1628.JPG"
+        alt="Concourse"
+        data-building="Concourse"
+        data-location="Concourse"
+        data-time="9:27 a.m."
+        data-photographer="Paul Fox"
+      >
+
+    </div>
+
+
+    <div class="photo" data-building="Concourse">
+
+      <img
+        src="mironis_3.png"
+        alt="Concourse"
+        data-building="Concourse"
+        data-location="Concourse"
+        data-time="9:03 - 9:59 a.m."
+        data-photographer="George Mironis"
+      >
+
+    </div>
+
+
+  </div>
+
+
+  <p class="footer">
+    Charlie Phippard
+  </p>
+
+
+</div>
+
+
+<!-- ================================= -->
+<!-- LIGHTBOX -->
+<!-- ================================= -->
+
+
+<div class="lightbox" id="lightbox">
+
+  <div class="lightbox-content">
+
+    <button
+      class="lightbox-close"
+      id="lightboxClose"
+      aria-label="Close"
+      type="button"
+    >
+      ×
+    </button>
+
+
+    <img
+      class="lightbox-image"
+      id="lightboxImage"
+      src=""
+      alt=""
+    >
+
+
+    <div class="lightbox-info" id="lightboxInfo">
+
+      <ul>
+
+        <li>
+          <span class="label">Building:</span>
+          <span id="infoBuilding"></span>
+        </li>
+
+        <li>
+          <span class="label">Location:</span>
+          <span id="infoLocation"></span>
+        </li>
+
+        <li>
+          <span class="label">Time:</span>
+          <span id="infoTime"></span>
+        </li>
+
+        <li>
+          <span class="label">Photographer:</span>
+          <span id="infoPhotographer"></span>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+/* ================================= */
+/* FILTER SYSTEM */
+/* ================================= */
+
+
+const filterButtons =
+  document.querySelectorAll('.filter-button');
+
+
+const photos =
+  document.querySelectorAll('.photo');
+
+
+filterButtons.forEach(function(button) {
+
+  button.addEventListener('click', function() {
+
+    const filter =
+      button.dataset.filter;
+
+
+    /* Update active button */
+
+    filterButtons.forEach(function(item) {
+
+      item.classList.remove('active');
+
+    });
+
+
+    button.classList.add('active');
+
+
+    /* Show / hide photos */
+
+    photos.forEach(function(photo) {
+
+      const building =
+        photo.dataset.building;
+
+
+      if (filter === 'all' || building === filter) {
+
+        photo.classList.remove('hidden');
+
+      } else {
+
+        photo.classList.add('hidden');
+
+      }
+
+    });
+
+  });
+
+});
+
+
+/* ================================= */
+/* LIGHTBOX */
+/* ================================= */
+
+
+const lightbox =
+  document.getElementById('lightbox');
+
+
+const lightboxImage =
+  document.getElementById('lightboxImage');
+
+
+const lightboxClose =
+  document.getElementById('lightboxClose');
+
+
+const infoBuilding =
+  document.getElementById('infoBuilding');
+
+
+const infoLocation =
+  document.getElementById('infoLocation');
+
+
+const infoTime =
+  document.getElementById('infoTime');
+
+
+const infoPhotographer =
+  document.getElementById('infoPhotographer');
+
+
+const galleryImages =
+  document.querySelectorAll('.photo img');
+
+
+galleryImages.forEach(function(image) {
+
+
+  image.addEventListener('click', function() {
+
+
+    /*
+      Use the clicked image itself as the lightbox source.
+
+      Because .lightbox-image has a fixed display area
+      and object-fit: contain, even a small thumbnail
+      will be enlarged to fit the available space.
+    */
+
+    lightboxImage.src =
+      image.src;
+
+
+    lightboxImage.alt =
+      image.alt;
+
+
+    infoBuilding.textContent =
+      image.dataset.building || '';
+
+
+    infoLocation.textContent =
+      image.dataset.location || '';
+
+
+    infoTime.textContent =
+      image.dataset.time || '';
+
+
+    infoPhotographer.textContent =
+      image.dataset.photographer || '';
+
+
+    lightbox.classList.add('active');
+
+
+    document.body.style.overflow =
+      'hidden';
+
+
+  });
+
+
+});
+
+
+/* ================================= */
+/* CLOSE LIGHTBOX */
+/* ================================= */
+
+
+function closeLightbox() {
+
+  lightbox.classList.remove('active');
+
+  document.body.style.overflow = '';
+
+}
+
+
+/* Close button */
+
+lightboxClose.addEventListener(
+  'click',
+  function(event) {
+
+    event.stopPropagation();
+
+    closeLightbox();
+
+  }
+);
+
+
+/* Click outside image */
+
+lightbox.addEventListener(
+  'click',
+  function(event) {
+
+    if (event.target === lightbox) {
+
+      closeLightbox();
+
+    }
+
+  }
+);
+
+
+/* Escape key */
+
+document.addEventListener(
+  'keydown',
+  function(event) {
+
+    if (event.key === 'Escape') {
+
+      closeLightbox();
+
+    }
+
+  }
+);
+
+
+</script>
+
+
+</body>
+</html>
